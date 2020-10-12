@@ -1,0 +1,25 @@
+#blog-list{
+    min-height: 1200px;
+}
+#blog-list > h1{
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 1px 1px whitesmoke;
+}
+#blog-list .blog-post img{
+    max-height: 200px;
+}
+#blog-list .blog-post h1{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+#blog-list .blog-post p{
+    text-align: justify;
+
+}
+
