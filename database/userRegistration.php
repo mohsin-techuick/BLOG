@@ -10,6 +10,7 @@ if(isset($_POST['registerbtn']))
 	$password=md5($_POST['password']);
 	$profile_pic=$_FILES['profile_pic'];
 	$file_path="";
+	
 	//if user select profile  image
 	if($profile_pic!=''){
 		$file_path.="../db_images/".time().$profile_pic['name'];

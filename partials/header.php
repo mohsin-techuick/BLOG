@@ -12,10 +12,21 @@
 			   <a href="/PHPBlog/" class="nav-link text-white ml-md-3 <?php echo $_SERVER['REQUEST_URI']=="/PHPBlog/" ? 'active' : '' ?>" id="home">Home</a>
 		   </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" >Account</a>
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" >
+					<!--Display username only if user logged in-->
+					<?php
+						echo isset($_SESSION['USER-NAME']) ? $_SESSION['USER-NAME'] : "Accont";
+					?>
+				</a>
+				<!--if user logined in show logout if  not  showlogin and register-->
                 <div class="dropdown-menu">
-                <a class="dropdown-item" href="/PHPBlog/users/login.php">Login</a>
-                <a class="dropdown-item" href="/PHPBlog/users/register.php">Register</a>
+					<?php if(isset($_SESSION['USER-NAME'])){ ?>
+						<a class="dropdown-item" href="../database/userlogout.php">Logout</a>
+					<?php } ?>
+					<?php if(!isset($_SESSION['USER-NAME'])){  ?>
+					<a class="dropdown-item" href="/PHPBlog/users/login.php">Login</a>
+					<a class="dropdown-item" href="/PHPBlog/users/register.php">Register</a>
+					<?php } ?>
                 </div>
             </li>
         </ul>
