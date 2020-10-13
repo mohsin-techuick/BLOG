@@ -1,3 +1,10 @@
+<?php 
+session_start();
+//if user is already logged in then it redirects to users dashboard
+if(isset($_SESSION['USER-NAME'])){
+	header("Location:users/dashboard.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,49 +43,52 @@
 				
 				<div class="col-md-4 blog-post mb-2">
 					<div class="card">
-						<img src="assets/images/demo.png" alt="blog post thumbnail" class="card-img-top">
+						<img src="<?php echo '/PHPBlog/'.$row['thumbnail']; ?>"  alt="thumbnail" class="card-img-top">
 						<div class="card-body">
-							<h1><?php echo $row['title']; ?></h1>
-							<p>
+							<h4 class="text-center text-capitalize"><?php echo $row['title']; ?></h4>
+							<hr />
 								<!--Display only 100 characters of description-->
-								<?php echo substr($row['description'], 0, 100).'...'; ?>
-							</p>
-								<!--Read more functionality using model  and jquery-->
-								
+								<?php
+								$desc=$row['description'];
+									if(strlen($desc)>100){
+									$desc=substr($desc, 0, 100).'...'; 				
+								}
+								echo "<p>$desc</p>";
+								?>
+				
+							<!--Read more only of it contains more than 100 characters-->
 								<!-- link trigger modal -->
-							<a href="javascript:void(0);" role="button" data-toggle="modal" data-target="#readmoreModel<?php echo $row['id']; ?>">
-							 Read more
-							</button>
+							<?php if(strlen($desc)>100): ?>				
+							
+								<a href="javascript:void(0);" role="button" data-toggle="modal" data-target="#readmoreModel<?php echo $row['id']; ?>">
+								 Read more
+								</a>
+							<?php endif; ?>
+							
 								
 						<!-- Modal -->
 						<div class="modal fade" id="readmoreModel<?php echo $row['id']; ?>" tabindex="-1" role="dialog">
 						  <div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
 							  <div class="modal-header">
-								<h5 class="modal-title text-dark" id="readmoreModel">
+								<h5 class="modal-title text-dark text-uppercase" id="readmoreModel">
 									<?php echo $row['title']; ?>
 								 </h5>
 								<button type="button" class="close" data-dismiss="modal">
-								  <span aria-hidden="true">&times;</span>
+								  <span>&times;</span>
 								</button>
 							  </div>
-							  <div class="modal-body">
-								  <p class="text-black-50"><?php echo $row['description']; ?></p>
+							  <div class="modal-body" >
+								  <p class="text-dark"><?php echo $row['description']; ?></p>
 							  </div>
 							  <div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							  </div>
 							</div>
 						  </div>
+						</div>		
 						</div>
-								
-						</div>
-						<div class="card-footer text-center">
-							<a href="" class="card-link btn btn-primary">Update</a>
-							<a href="" class="card-link btn btn-primary">Delete</a>
-						</div>
-						<div>
-						</div>
+						
 					</div>
 				</div>
 				<?php endwhile; ?>
@@ -87,17 +97,12 @@
 	</div>
 
 			<!-- Including footer -->
-			<?php  include_once("partials/footer.php"); ?>
+		<?php  include_once("partials/footer.php"); ?>
 
 	<!-- Bootstrap Jquery, popper.js and javascript -->
 	<script src="assets/bootstrap/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script src="assets/bootstrap/js/popper.min.js" type="text/javascript"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			
-		});
-	</script>
+	
 </body>
-
 </html>

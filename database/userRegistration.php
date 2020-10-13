@@ -13,8 +13,8 @@ if(isset($_POST['registerbtn']))
 	
 	//if user select profile  image
 	if($profile_pic!=''){
-		$file_path.="../db_images/".time().$profile_pic['name'];
-		move_uploaded_file($profile_pic['tmp_name'],$file_path);
+		$file_path.="db_images/".time().$profile_pic['name'];
+		move_uploaded_file($profile_pic['tmp_name'],"../".$file_path);
 	}
 	
 	/* Insert Data into  users table */

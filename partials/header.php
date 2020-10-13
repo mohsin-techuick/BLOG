@@ -21,7 +21,8 @@
 				<!--if user logined in show logout if  not  showlogin and register-->
                 <div class="dropdown-menu">
 					<?php if(isset($_SESSION['USER-NAME'])){ ?>
-						<a class="dropdown-item" href="../database/userlogout.php">Logout</a>
+						<a class="dropdown-item" href="../users/profile.php" id="profile">Profile</a>
+						<a class="dropdown-item" href="/PHPBlog/database/userlogout.php">Logout</a>
 					<?php } ?>
 					<?php if(!isset($_SESSION['USER-NAME'])){  ?>
 					<a class="dropdown-item" href="/PHPBlog/users/login.php">Login</a>
