@@ -1,1 +1,1 @@
-# CorePHP-Blog
+# BLOG
