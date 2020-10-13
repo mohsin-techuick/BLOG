@@ -9,7 +9,7 @@
 	  
        <ul class="navbar-nav mr-auto w-100 justify-content-between">
 		   <li class="nav-item">
-			   <a href="/PHPBlog/index.php" class="nav-link text-white ml-md-3 <?php echo $_SERVER['REQUEST_URI']=="/PHPBlog/" ? 'active' : '' ?>" id="home">Home</a>
+			   <a href="/PHPBlog/" class="nav-link text-white ml-md-3 <?php echo $_SERVER['REQUEST_URI']=="/PHPBlog/" ? 'active' : '' ?>" id="home">Home</a>
 		   </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" >Account</a>
