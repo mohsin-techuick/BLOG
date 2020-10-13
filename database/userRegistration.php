@@ -1,5 +1,4 @@
 <?php  
-
 include("../connection.php");	
 if(isset($_POST['registerbtn']))
 {
@@ -18,8 +17,8 @@ if(isset($_POST['registerbtn']))
 	}
 	
 	/* Insert Data into  users table */
-	$sql="INSERT INTO users(id,firstname,lastname,email,phone,profile_pic,password) 
-	VALUES (NULL,'$firstname','$lastname','$email','$phone','$file_path','$password')";
+	$sql="INSERT INTO users(id,firstname,lastname,email,phone,profile_pic,password,role_id) 
+	VALUES (NULL,'$firstname','$lastname','$email','$phone','$file_path','$password',1)";
 	$res=mysqli_query($conn,$sql);
 	if($res){
 		header("Location:../users/login.php");
