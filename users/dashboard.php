@@ -24,7 +24,7 @@
 					<a href="createblog.php" class="btn btn-primary">Create Blog</a>
 				</div>
 				
-				<table class="table">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -32,6 +32,7 @@
 							<th>Description</th>
 							<th>Thumbnail</th>
 							<th>Slug</th>
+							<th colspan="3">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -41,6 +42,9 @@
 							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
 							<td>imgdata</td>
 							<td>this-is-post-slug</td>
+							<td><a href="" class="btn btn-primary">View</a></td>
+							<td><a href="" class="btn btn-primary">Edit</a></td>
+							<td><a href="" class="btn btn-primary">Delete</a></td>
 						</tr>
 						<tr>
 							<td>1</td>
@@ -48,6 +52,9 @@
 							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
 							<td>imgdata</td>
 							<td>this-is-post-slug</td>
+							<td><a href="" class="btn btn-primary">View</a></td>
+							<td><a href="" class="btn btn-primary">Edit</a></td>
+							<td><a href="" class="btn btn-primary">Delete</a></td>
 						</tr>
 						<tr>
 							<td>1</td>
@@ -55,6 +62,9 @@
 							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
 							<td>imgdata</td>
 							<td>this-is-post-slug</td>
+							<td><a href="" class="btn btn-primary">View</a></td>
+							<td><a href="" class="btn btn-primary">Edit</a></td>
+							<td><a href="" class="btn btn-primary">Delete</a></td>
 						</tr>
 						<tr>
 							<td>1</td>
@@ -62,12 +72,18 @@
 							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
 							<td>imgdata</td>
 							<td>this-is-post-slug</td>
+							<td><a href="" class="btn btn-primary">View</a></td>
+							<td><a href="" class="btn btn-primary">Edit</a></td>
+							<td><a href="" class="btn btn-primary">Delete</a></td>
 						</tr><tr>
 							<td>1</td>
 							<td>Database</td>
 							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
 							<td>imgdata</td>
 							<td>this-is-post-slug</td>
+						<td><a href="" class="btn btn-primary">View</a></td>
+							<td><a href="" class="btn btn-primary">Edit</a></td>
+							<td><a href="" class="btn btn-primary">Delete</a></td>
 						</tr>
 						
 					</tbody>
