@@ -30,7 +30,7 @@
 				<!--Fecth all active Blogs => having 'status' "1" from blog table  -->
 				<?php
 					include("connection.php");
-					$sql="SELECT * FROM blogs WHERE status=1";
+					$sql="SELECT * FROM blogs";
 					$res=mysqli_query($conn,$sql);
 					while($row=mysqli_fetch_assoc($res)):
 				?>
@@ -43,20 +43,46 @@
 							<p>
 								<!--Display only 100 characters of description-->
 								<?php echo substr($row['description'], 0, 100).'...'; ?>
-								<a href="">Read more</a>
 							</p>
+								<!--Read more functionality using model  and jquery-->
+								
+								<!-- link trigger modal -->
+							<a href="javascript:void(0);" role="button" data-toggle="modal" data-target="#readmoreModel<?php echo $row['id']; ?>">
+							 Read more
+							</button>
+								
+						<!-- Modal -->
+						<div class="modal fade" id="readmoreModel<?php echo $row['id']; ?>" tabindex="-1" role="dialog">
+						  <div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<h5 class="modal-title text-dark" id="readmoreModel">
+									<?php echo $row['title']; ?>
+								 </h5>
+								<button type="button" class="close" data-dismiss="modal">
+								  <span aria-hidden="true">&times;</span>
+								</button>
+							  </div>
+							  <div class="modal-body">
+								  <p class="text-black-50"><?php echo $row['description']; ?></p>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+								
 						</div>
 						<div class="card-footer text-center">
-							<a href="" class="card-link">Update</a>
-							<a href="" class="card-link">Delete</a>
+							<a href="" class="card-link btn btn-primary">Update</a>
+							<a href="" class="card-link btn btn-primary">Delete</a>
 						</div>
 						<div>
 						</div>
 					</div>
 				</div>
-				
 				<?php endwhile; ?>
-				
 			</div>
 		</div>
 	</div>
