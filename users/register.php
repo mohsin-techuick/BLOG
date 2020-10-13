@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../assets/css/form.css">
 </head>
 <body>
+	
     <!-- including header -->
     <?php include_once("../partials/header.php"); ?>
 
@@ -17,22 +18,27 @@
         <div class="row justify-content-center">
             <div class="col-md-6 p-3">
                 <h1 class="text-center text-uppercase">User Registration</h1>
-                <form action="" method="post" name="userLoginForm" id="userLoginForm">
+                <form action="../database/userRegistration.php" method="post" name="userLoginForm" id="userLoginForm" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Firstname</label>
                         <input type="text" name="firstname" placeholder="Enter Firstname" class="form-control"> 
                     </div>
                     <div class="form-group">
                         <label for="">Lastname</label>
-                        <input type="lastname" name="lastname" placeholder="Enter Lastname" class="form-control"> 
+                        <input type="text" name="lastname" placeholder="Enter Lastname" class="form-control"> 
                     </div>
 					<div class="form-group">
                         <label for="">Email</label>
-                        <input type="lastname" name="email" placeholder="Enter email address" class="form-control"> 
+                        <input type="text" name="email" placeholder="Enter email address" class="form-control"> 
                     </div>
 					<div class="form-group">
+                        <label for="">Phone</label>
+                        <input type="tel" name="phone" placeholder="Enter email address" class="form-control"> 
+                    </div>
+					
+					<div class="form-group">
                         <label for="">Password</label>
-                        <input type="password" name="email" placeholder="Enter password" class="form-control"> 
+                        <input type="password" name="password" placeholder="Enter password" class="form-control"> 
                     </div>
 					<div class="form-group">
 						<label for="">Choose your profile image</label>
