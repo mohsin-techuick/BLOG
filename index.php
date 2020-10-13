@@ -18,8 +18,8 @@
 	   }
 	</style>
 </head>
-
 <body>
+	
 	<!-- including header -->
 	<?php include_once("partials/header.php"); ?>
 	<div class="container">
