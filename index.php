@@ -26,15 +26,27 @@
 		<div id="blog-list">
 			<h1>List All BLOGS</h1>
 			<div class="row">
+				
+				<!--Fecth all active Blogs => having 'status' "1" from blog table  -->
+				<?php
+					include("connection.php");
+					$sql="SELECT * FROM blogs WHERE status=1";
+					$res=mysqli_query($conn,$sql);
+					while($row=mysqli_fetch_assoc($res)):
+				?>
+				
 				<div class="col-md-4 blog-post mb-2">
 					<div class="card">
 						<img src="assets/images/demo.png" alt="blog post thumbnail" class="card-img-top">
 						<div class="card-body">
-							<h1>post title</h1>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eveniet non illum nihil minima quos nam ipsum, quasi minus amet impedit, accusantium commodi! Omnis reprehenderit autem sunt? Et, corporis velit!</p>
+							<h1><?php echo $row['title']; ?></h1>
+							<p>
+								<!--Display only 100 characters of description-->
+								<?php echo substr($row['description'], 0, 100).'...'; ?>
+								<a href="">Read more</a>
+							</p>
 						</div>
 						<div class="card-footer text-center">
-							<a href="" class="card-link">View</a>
 							<a href="" class="card-link">Update</a>
 							<a href="" class="card-link">Delete</a>
 						</div>
@@ -43,39 +55,8 @@
 					</div>
 				</div>
 				
-				<div class="col-md-4 blog-post mb-2">
-					<div class="card">
-						<img src="assets/images/demo.png" alt="blog post thumbnail" class="card-img-top">
-						<div class="card-body">
-							<h1>post title</h1>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eveniet non illum nihil minima quos nam ipsum, quasi minus amet impedit, accusantium commodi! Omnis reprehenderit autem sunt? Et, corporis velit!</p>
-						</div>
-						<div class="card-footer text-center">
-							<a href="" class="card-link">View</a>
-							<a href="" class="card-link">Update</a>
-							<a href="" class="card-link">Delete</a>
-						</div>
-						<div>
-						</div>
-					</div>
-				</div>
+				<?php endwhile; ?>
 				
-				<div class="col-md-4 blog-post mb-2">
-					<div class="card">
-						<img src="assets/images/demo.png" alt="blog post thumbnail" class="card-img-top">
-						<div class="card-body">
-							<h1>post title</h1>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eveniet non illum nihil minima quos nam ipsum, quasi minus amet impedit, accusantium commodi! Omnis reprehenderit autem sunt? Et, corporis velit!</p>
-						</div>
-						<div class="card-footer text-center">
-							<a href="" class="card-link">View</a>
-							<a href="" class="card-link">Update</a>
-							<a href="" class="card-link">Delete</a>
-						</div>
-						<div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
