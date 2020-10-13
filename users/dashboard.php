@@ -41,57 +41,25 @@
 						</tr>
 					</thead>
 					<tbody>
+
+						<!--Fecth all logged in user blogs that are active  -->
+					<?php
+						include("../connection.php");
+						$sql="SELECT * FROM blogs WHERE status=1 and user_id={$_SESSION['USER-ID']}";
+						$res=mysqli_query($conn,$sql);
+						while($row=mysqli_fetch_assoc($res)):
+					?>
 						<tr>
-							<td>1</td>
-							<td>Database</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
-							<td>imgdata</td>
-							<td>this-is-post-slug</td>
-							<td><a href="" class="btn btn-primary">View</a></td>
-							<td><a href="" class="btn btn-primary">Edit</a></td>
-							<td><a href="" class="btn btn-primary">Delete</a></td>
+							<td><?php echo $row['id']; ?></td>
+							<td><?php echo $row['title']; ?></td>
+							<td><?php echo $row['description']; ?></td>
+							<td><img src="<?php echo $row['thumbnail']; ?>" width="100" height="100" alt="thumbnail"></td>
+							<td><?php echo $row['slug']; ?></td>
+							<td><a href="<?php echo $row['id']; ?>" class="btn btn-primary">View</a></td>
+							<td><a href="<?php echo $row['id']; ?>" class="btn btn-primary">Edit</a></td>
+							<td><a href="<?php echo $row['id']; ?>" class="btn btn-primary">Delete</a></td>
 						</tr>
-						<tr>
-							<td>1</td>
-							<td>Database</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
-							<td>imgdata</td>
-							<td>this-is-post-slug</td>
-							<td><a href="" class="btn btn-primary">View</a></td>
-							<td><a href="" class="btn btn-primary">Edit</a></td>
-							<td><a href="" class="btn btn-primary">Delete</a></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Database</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
-							<td>imgdata</td>
-							<td>this-is-post-slug</td>
-							<td><a href="" class="btn btn-primary">View</a></td>
-							<td><a href="" class="btn btn-primary">Edit</a></td>
-							<td><a href="" class="btn btn-primary">Delete</a></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Database</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
-							<td>imgdata</td>
-							<td>this-is-post-slug</td>
-							<td><a href="" class="btn btn-primary">View</a></td>
-							<td><a href="" class="btn btn-primary">Edit</a></td>
-							<td><a href="" class="btn btn-primary">Delete</a></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Database</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, provident explicabo eaque et voluptatem, quaerat, nulla assumenda voluptatum dignissimos ea nemo architecto. Fuga repudiandae, exercitationem aliquid nisi impedit ipsam ratione!</td>
-							<td>imgdata</td>
-							<td>this-is-post-slug</td>
-						<td><a href="" class="btn btn-primary">View</a></td>
-							<td><a href="" class="btn btn-primary">Edit</a></td>
-							<td><a href="" class="btn btn-primary">Delete</a></td>
-						</tr>
-						
+					<?php endwhile; ?>
 					</tbody>
 				</table>
 			</div>
