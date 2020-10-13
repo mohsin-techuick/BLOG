@@ -9,6 +9,14 @@
 	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 	<!-- Custom style file -->
 	<link rel="stylesheet" href="assets/css/index.css">
+	
+	<!--Style for current active link-->
+	<style type="text/css">
+	   .active{
+		background-color: black;
+		   color: white;
+	   }
+	</style>
 </head>
 
 <body>
@@ -75,10 +83,15 @@
 			<!-- Including footer -->
 			<?php  include_once("partials/footer.php"); ?>
 
-			<!-- Bootstrap Jquery, popper.js and javascript -->
-			<script src="assets/bootstrap/js/jquery-3.4.1.min.js" type="text/javascript"></script>
-			<script src="assets/bootstrap/js/popper.min.js" type="text/javascript"></script>
-			<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<!-- Bootstrap Jquery, popper.js and javascript -->
+	<script src="assets/bootstrap/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+	<script src="assets/bootstrap/js/popper.min.js" type="text/javascript"></script>
+	<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+		});
+	</script>
 </body>
 
 </html>
