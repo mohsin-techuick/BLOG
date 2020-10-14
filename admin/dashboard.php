@@ -19,12 +19,17 @@
     <!-- including header -->
     <?php include_once("../partials/adminheader.php"); ?>
 	<?php
-		function getCount($blogStatus=0){
-			
+		function getCount($table,$blogStatus=0){	
 			//status 0 => blog is "inactive"
 			//status 1 => blog is "active"
 			include("../connection.php");
-			$query="SELECT count(*) as total FROM blogs WHERE status=$blogStatus";
+			$query="";
+			if($table=="blogs"){
+				$query="SELECT count(*) as total FROM blogs WHERE status=$blogStatus";
+			}
+			else if($table=="users"){
+				$query="SELECT count(*) as total FROM users";
+			}
 			$res=mysqli_query($conn,$query);
 			$row=mysqli_fetch_assoc($res);
 			$count=$row['total'];
@@ -32,26 +37,39 @@
 		} 
 	?>
     <div class="container min-vh-100 p-5" id="wrapper">
+		<h4 class="text-center text-danger p-2 mb-3">COUNTER</h4>
 		<div class="row justify-content-center">
 			<div class="col-sm-3 mb-3">
 				<div class="box active-blogs">
-					<a href="blogStatus.php?status=active">Active Blogs</a>
-					<h1><?php echo getCount(1);  ?></h1>
+					<span>Active Blogs</span>
+					<h1><?php echo getCount("blogs",1);  ?></h1>
 				</div>
 			</div>
 			<div class="col-sm-3 mb-3">
 				<div class="box inactive-blogs">
-					<a href="blogStatus.php?status=inactive">Inactive Blogs</a>
-					<h1><?php echo getCount(0);  ?></h1>
+					<span>Inactive Blogs</span>
+					<h1><?php echo getCount("blogs",0);  ?></h1>
 				</div>
 			</div>
 			<div class="col-sm-3 mb-3">
 				<div class="box users-list">
-					<a href="/PHPBlog/admin/usersList.php">Users list</a>
+					<span>Users</span>
+					<h1><?php echo getCount('users',0);  ?></h1>
 				</div>
 			</div>
 		</div>
-    </div>
+		
+			<ul class="nav justify-content-center mt-5">
+			  <li class="nav-item mr-3">
+				<a class="nav-link btn btn-primary" href="/PHPBlog/admin/usersList.php">Users List</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link btn btn-primary" href="blogStatus.php">Blog Status</a>
+			  </li>
+			</ul>
+		
+	</div>
+	
 
     <!-- Including footer -->
     <?php  include_once("../partials/footer.php"); ?>

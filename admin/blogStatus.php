@@ -16,7 +16,7 @@
     <div class="container min-vh-100" id="wrapper">
         <div class="row">
             <div class="col-12" id="table">
-				
+				<h3 class="text-center p-4">BLOG STATUS</h3>
 				<table class="table table-hover table-responsive-sm">
 					<thead>
 						<tr>
@@ -29,23 +29,13 @@
 						</tr>
 					</thead>
 					<tbody>
-			
+						
 					<?php
 						
-					//replace active to 1 and inacgive to 0 to match in database
-					$status="";
-					if(isset($_GET['status'])){	
-						if($_GET['status']=="active"){
-							$status=1;
-						}
-						else if($_GET['status']=="inactive"){
-							$status=0;
-						}
-					}
-					/* Fetch Blogs based on active and inactive status */
+					/* Fetch Blogs with active and inactive status */
+						
 					include("../connection.php");
-					$sql="SELECT * FROM blogs WHERE status='$status'";
-//					die($sql);
+					$sql="SELECT * FROM blogs";
 					$res=mysqli_query($conn,$sql);
 					if(mysqli_num_rows($res)>0){
 					while($row=mysqli_fetch_assoc($res)):

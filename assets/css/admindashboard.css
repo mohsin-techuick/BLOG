@@ -1,6 +1,6 @@
 /* CSS Document */
 .box{
-	height: 150px;
+	height: 100px;
 	color: white;
 	text-align: center;
 	display: flex;
@@ -17,7 +17,7 @@
 .inactive-blogs{
 	background-color: red;
 }
-.box a{
+.box span{
 	color: white;
 	display: block;
 	font-size: 20px;
