@@ -1,0 +1,25 @@
+/* CSS Document */
+#profile{
+	padding: 1.5rem;
+}
+#header{
+	text-align: center;
+}
+#header >img{
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	display: block;
+	margin: auto;
+	margin-bottom: 2px;
+}
+#body{
+	padding: 2rem;
+/*	border: 2px solid red;*/
+}
+#body form{
+	
+}
+#body form input{
+	padding: 20px;
+}
