@@ -65,7 +65,6 @@ if(!isset($_SESSION['ADMIN-NAME'])){
 				</div>
 			</div>
 		</div>
-		
 			<ul class="nav justify-content-center mt-5">
 			  <li class="nav-item mr-3">
 				<a class="nav-link btn btn-primary" href="/PHPBlog/admin/usersList.php">Check Users List</a>

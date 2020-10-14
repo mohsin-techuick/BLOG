@@ -7,10 +7,17 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	  
-       <ul class="navbar-nav mr-auto w-100 justify-content-between">
-		   <li class="nav-item">
-			   <a href="/PHPBlog/" class="nav-link text-white ml-md-3 <?php echo $_SERVER['REQUEST_URI']=="/PHPBlog/" ? 'active' : '' ?>" id="home">Home</a>
-		   </li>
+       <ul class="navbar-nav mr-auto w-100">
+		   
+		   <?php if(isset($_SESSION['USER-NAME'])): ?>
+			   <li class="nav-item">
+				   <a href="/PHPBlog/users/dashboard.php" class="nav-link text-white ml-md-3" id="dashboard">Dashboard</a>
+			   </li>
+			 <li class="nav-item">
+				 <a class="nav-link text-white" href="/PHPBlog/index.php" id="blogs">Blogs</a>
+		   	</li>		 	
+			<?php endif; ?>
+		   <li class="ml-auto"></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" >
 					<!--Display username only if user logged in-->

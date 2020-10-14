@@ -1,6 +1,6 @@
 <?php session_start(); ?>
 <?php if(!isset($_SESSION['USER-NAME'])){
-	header("Location:../index.php");	
+	header("Location:login.php");	
 }  
 ?>
 <!DOCTYPE html>
@@ -13,7 +13,12 @@
 	<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
 	<!-- Custom style file -->
 	<link rel="stylesheet" href="../assets/css/index.css">
-	
+	<style>
+		.active{
+		   background-color: green;
+		   color: white;
+	   }
+	</style>
 </head>
 <body>
 	<!-- including header -->
@@ -79,7 +84,11 @@
 	<script src="/PHPBlog/assets/bootstrap/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 	<script src="/PHPBlog/assets/bootstrap/js/popper.min.js" type="text/javascript"></script>
 	<script src="/PHPBlog/assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$("#dashboard").addClass("active");
+	});
+	</script>
 </body>
 
 </html>
