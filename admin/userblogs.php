@@ -7,18 +7,49 @@
     <!-- Bootstrap css file -->
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <!-- Custom style file -->
-	<link rel="stylesheet" href="../assets/css/adminIndex.css">
 </head>
 <body>
-    <!-- including header -->
+    
+	<!-- including header -->
     <?php include_once("../partials/adminheader.php"); ?>
+	<?php
 	
+	?>
     <div class="container min-vh-100" id="wrapper">
-        <div class="row">
-            <div class="col-12" id="table">
-				<h1><?php echo $_GET['id'] ?? "Default" ?></h1>
+        <div class="row p-3">
+		<?php include("../connection.php") ?>
+		<?php
+			// all users fetxh
+			$id=$_GET['uid'] ?? -1;
+			$sql="SELECT * FROM blogs WHERE user_id=$id";
+			$res=mysqli_query($conn,$sql);
+			if(mysqli_num_rows($res)>0){
+			while($row=mysqli_fetch_assoc($res)):
+		?>
+            <div class="col-md-4">
+				<div class="card">
+					<img src="<?php echo '../'.$row['thumbnail'];  ?>" class="card-img-top" style="max-height: 150px" alt="">
+					<div class="card-header bg-dark text-white text-capitalize"><h6><?php echo $row['title'] ?></h6></div>
+					<div class="card-body" style="max-height: 200px;overflow-y: auto">
+						<p class="text-center"><strong>Created Date: </strong> <?php echo $row['created_at'] ?></p>
+						<?php echo $row['description'] ?>
+					</div>
+					<div class="card-footer text-center text-white bg-dark">
+						<form action="deleteUserBlog.php" method="post">
+							<input type="hidden" name="userid" value="<?php echo $row['user_id'] ?>">
+							<input type="hidden" name="blogid" value="<?php echo $row['id'] ?>">
+							<input type="submit" value="Delete" name="<?php echo $row['id'] ?>" class="btn btn-primary">
+						</form>
+					</div>
+				</div>
             </div>
+		<?php endwhile;  }  ?>
         </div>
+		<?php 
+			if(mysqli_num_rows($res)==0){
+				echo "<h4 style='text-align:center;border:2px solid red; padding:2rem;text-transform:uppercase'>No Blog for this user</h4>";
+			}
+		?>
     </div>
 
     <!-- Including footer -->

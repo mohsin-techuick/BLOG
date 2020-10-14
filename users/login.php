@@ -35,7 +35,10 @@ if(isset($_SESSION['USER-NAME'])){
                     </div>
                     <div class="form-group">
                         <input type="submit" name="loginBtn" value="Login" class="btn btn-primary">
-                    </div>  
+                    </div>
+						<p class="text-center text-danger">
+							<?php if(isset($_GET['fail'])) { echo 'Login Failed'; } ?>
+						</p>
                 </form>
             </div>
         </div>

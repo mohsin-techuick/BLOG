@@ -8,21 +8,41 @@
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <!-- Custom style file -->
 	<link rel="stylesheet" href="../assets/css/admindashboard.css">
+	<style type="text/css">
+		#dashboard{
+			background-color: black;
+			padding: 10px;
+		}
+	</style>
 </head>
 <body>
     <!-- including header -->
     <?php include_once("../partials/adminheader.php"); ?>
-
+	<?php
+		function getCount($blogStatus=0){
+			
+			//status 0 => blog is "inactive"
+			//status 1 => blog is "active"
+			include("../connection.php");
+			$query="SELECT count(*) as total FROM blogs WHERE status=$blogStatus";
+			$res=mysqli_query($conn,$query);
+			$row=mysqli_fetch_assoc($res);
+			$count=$row['total'];
+			return $count;
+		} 
+	?>
     <div class="container min-vh-100 p-5" id="wrapper">
 		<div class="row justify-content-center">
 			<div class="col-sm-3 mb-3">
 				<div class="box active-blogs">
-					<a href="">Active Blogs</a>
+					<a href="blogStatus.php?status=active">Active Blogs</a>
+					<h1><?php echo getCount(1);  ?></h1>
 				</div>
 			</div>
 			<div class="col-sm-3 mb-3">
 				<div class="box inactive-blogs">
-					<a href="">Inactive Blogs</a>
+					<a href="blogStatus.php?status=inactive">Inactive Blogs</a>
+					<h1><?php echo getCount(0);  ?></h1>
 				</div>
 			</div>
 			<div class="col-sm-3 mb-3">

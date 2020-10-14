@@ -12,43 +12,39 @@
 <body>
     <!-- including header -->
     <?php include_once("../partials/adminheader.php"); ?>
-
+	
     <div class="container min-vh-100" id="wrapper">
         <div class="row">
             <div class="col-12" id="table">
 				<h1 class="text-center p-5 pb-3 text-uppercase">Users List</h1>
-				<table class="table table-hover">
+				<table class="table table-hover table-responsive-sm">
 					<thead>
 						<tr>
 							<td>ID</td>
 							<td>Firstname</td>
-							<td>lastname</td>
-							<td>email</td>
-							<td>Action</td>
+							<td>Lastname</td>
+							<td>Email</td>
+							<td>Phone</td>
+							<td>Blogs</td>
 						</tr>
 					</thead>
 					<tbody>
+						<?php include("../connection.php") ?>
+						<?php
+							// all users fetxh
+							$sql="SELECT * FROM users";
+							$res=mysqli_query($conn,$sql);
+							while($row=mysqli_fetch_assoc($res)):
+							?>
 						<tr>
-							<td>2</td>
-							<td>ali</td>
-							<td>raza</td>
-							<td>ali@gmail.com</td>
-							<td><a href="userblogs.php?id=1" class="btn btn-primary">List Blogs</a></td>
+							<td><?php echo $row['id'] ?></td>
+							<td><?php echo $row['firstname'] ?></td>
+							<td><?php  echo $row['lastname'] ?></td>
+							<td><?php echo $row['email'] ?></td>
+							<td><?php echo $row['phone'] ?></td>
+							<td><a href="userblogs.php?uid=<?php echo $row['id'] ?>" class="btn btn-primary">List Blogs</a></td>
 						</tr>
-						<tr>
-							<td>1</td>
-							<td>ali</td>
-							<td>raza</td>
-							<td>ali@gmail.com</td>
-							<td><a href="userblogs.php?id=1" class="btn btn-primary">List Blogs</a></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>ali</td>
-							<td>raza</td>
-							<td>ali@gmail.com</td>
-							<td><a href="userblogs.php?id=1" class="btn btn-primary">List Blogs</a></td>
-						</tr>
+						<?php endwhile;  ?>
 					</tbody>
 				</table>
             </div>

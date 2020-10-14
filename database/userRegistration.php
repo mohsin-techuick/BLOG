@@ -12,7 +12,7 @@ if(isset($_POST['registerbtn']))
 	$file_path="";
 	
 	//if user select profile  image
-	if($profile_pic!=''){
+	if($profile_pic['name']!=''){
 		$file_path.="db_images/".time().$profile_pic['name'];
 		move_uploaded_file($profile_pic['tmp_name'],"../".$file_path);
 	}

@@ -3,8 +3,10 @@
 	height: 150px;
 	color: white;
 	text-align: center;
-	cursor: pointer;
-	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
 }
 .users-list{
 	background-color: black;
@@ -18,12 +20,7 @@
 .box a{
 	color: white;
 	display: block;
-	line-height: 150px;
-	height: 100vh;
 	font-size: 20px;
-	text-transform: capitalize;
-	font-weight: bold;
-}
-.box a:hover{
-	text-decoration: none;
+	padding: 5px;
+	font-variant: small-caps;
 }
