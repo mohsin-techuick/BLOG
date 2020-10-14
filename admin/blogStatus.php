@@ -29,12 +29,10 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php include("../connection.php"); ?>
-						
-					<!--Fetch Blogs based on active and inactive status-->
+			
 					<?php
-					
-						//relace active to 1 and inacgive to 0 to match in database
+						
+					//replace active to 1 and inacgive to 0 to match in database
 					$status="";
 					if(isset($_GET['status'])){	
 						if($_GET['status']=="active"){
@@ -44,8 +42,12 @@
 							$status=0;
 						}
 					}
-					$sql="SELECT * FROM blogs WHERE status=$status";
+					/* Fetch Blogs based on active and inactive status */
+					include("../connection.php");
+					$sql="SELECT * FROM blogs WHERE status='$status'";
+//					die($sql);
 					$res=mysqli_query($conn,$sql);
+					if(mysqli_num_rows($res)>0){
 					while($row=mysqli_fetch_assoc($res)):
 					?>
 						<tr>
@@ -76,7 +78,7 @@
 								?>
 							</td>
 						</tr>
-					<?php endwhile;  ?>
+					<?php endwhile; }?>
 					</tbody>
 				</table>
             </div>
