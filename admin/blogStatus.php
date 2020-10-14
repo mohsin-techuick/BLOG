@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['ADMIN-NAME'])){
+	header("Location:login.php");
+	exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,11 +36,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						
 					<?php
-						
 					/* Fetch Blogs with active and inactive status */
-						
 					include("../connection.php");
 					$sql="SELECT * FROM blogs";
 					$res=mysqli_query($conn,$sql);
@@ -74,10 +78,8 @@
             </div>
         </div>
     </div>
-
     <!-- Including footer -->
     <?php  include_once("../partials/footer.php"); ?>
-
     <!-- Bootstrap Jquery, popper.js and javascript -->
     <script src="../assets/bootstrap/js/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script src="../assets/bootstrap/js/popper.min.js" type="text/javascript"></script>

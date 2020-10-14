@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['ADMIN-NAME'])){
+	header("Location:login.php");
+	exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,16 +68,13 @@
 		
 			<ul class="nav justify-content-center mt-5">
 			  <li class="nav-item mr-3">
-				<a class="nav-link btn btn-primary" href="/PHPBlog/admin/usersList.php">Users List</a>
+				<a class="nav-link btn btn-primary" href="/PHPBlog/admin/usersList.php">Check Users List</a>
 			  </li>
 			  <li class="nav-item">
-				<a class="nav-link btn btn-primary" href="blogStatus.php">Blog Status</a>
+				<a class="nav-link btn btn-primary" href="blogStatus.php">Change Blog Status</a>
 			  </li>
 			</ul>
-		
 	</div>
-	
-
     <!-- Including footer -->
     <?php  include_once("../partials/footer.php"); ?>
 

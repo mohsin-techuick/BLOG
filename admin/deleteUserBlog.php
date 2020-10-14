@@ -1,4 +1,11 @@
 <?php
+session_start();
+if(!isset($_SESSION['ADMIN-NAME'])){
+	header("Location:login.php");
+	exit();
+}
+?>
+<?php
 include("../connection.php");
 $userid=$_POST['userid'];
 $blogid=$_POST['blogid'];
