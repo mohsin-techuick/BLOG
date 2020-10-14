@@ -29,12 +29,12 @@
 	<?php include_once("partials/header.php"); ?>
 	<div class="container">
 		<div id="blog-list">
-			<h1>List All BLOGS</h1>
+			<h1>BLOGS</h1>
 			<div class="row">
 				<!--Fecth all active Blogs => having 'status' "1" from blog table  -->
 				<?php
 					include("connection.php");
-					$sql="SELECT * FROM blogs";
+					$sql="SELECT * FROM blogs where status=1";
 					$res=mysqli_query($conn,$sql);
 					while($row=mysqli_fetch_assoc($res)):
 				?>
@@ -84,12 +84,15 @@
 						</div>
 						<div class="card-footer">
 							<!-- Like functionality of post using ajax-->
-							<form method="post">
-								<button type="submit" class="btn" data-="btn">
+							<form method="post" action="database/blogTotalLikes.php">
+								<input type="hidden" name="userid" value="<?php echo $_SESSION['USER-ID']; ?>">
+								<input type="hidden" name="blogid" value="<?php echo $row['id'] ?>">
+								<button type="submit" class="btn">
 									<i class="fa fa-heart text-danger"></i>
 								</button>
 								<strong id="likecount">5</strong>
 							</form>
+							
 						</div>
 					</div>
 				</div>
@@ -104,8 +107,22 @@
 	<script src="assets/bootstrap/js/popper.min.js" type="text/javascript"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
+		
 		$(document).ready(function(){
 			$("#blogs").addClass("active");
+			
+			function likeAjax(){
+				$.ajax({
+					url:"database/blogTotalLikes.php",
+					type:"POST",
+					data:{userid:13,blogid:17},
+					success:function(data,status,xhr){
+						$("#likecount").text(data);
+						console.log(data);
+					}
+				});
+			}
+			likeAjax();
 		});
 	</script>
 </body>

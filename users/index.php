@@ -1,4 +1,4 @@
 <?php 
 //this is just for redirection purpise 
-header("Location:dashboard.php");
+header("Location:/PHPBlog/index.php");
 exit();
