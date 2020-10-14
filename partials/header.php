@@ -10,7 +10,7 @@
        <ul class="navbar-nav mr-auto w-100">
 		   
 		   <?php if(isset($_SESSION['USER-NAME'])): ?>
-			   <li class="nav-item">
+			   <li class="nav-item mr-2">
 				   <a href="/PHPBlog/users/dashboard.php" class="nav-link text-white ml-md-3" id="dashboard">Dashboard</a>
 			   </li>
 			 <li class="nav-item">

@@ -33,10 +33,16 @@
 			<div class="row">
 				<!--Fecth all active Blogs => having 'status' "1" from blog table  -->
 				<?php
+				
 					include("connection.php");
 					$sql="SELECT * FROM blogs where status=1";
 					$res=mysqli_query($conn,$sql);
 					while($row=mysqli_fetch_assoc($res)):
+				
+					// Second Query for showing total likes	for blogs
+					$sql2="SELECT blog_id, count(*) as totallikes FROM `likes` GROUP BY blog_id HAVING blog_id={$row['id']}";
+					$res2=mysqli_query($conn,$sql2);
+					$row2=mysqli_fetch_assoc($res2);
 				?>
 				<div class="col-md-4 blog-post mb-2">
 					<div class="card">
@@ -84,13 +90,13 @@
 						</div>
 						<div class="card-footer">
 							<!-- Like functionality of post using ajax-->
-							<form method="post" action="database/blogTotalLikes.php">
+							<form method="post">
 								<input type="hidden" name="userid" value="<?php echo $_SESSION['USER-ID']; ?>">
 								<input type="hidden" name="blogid" value="<?php echo $row['id'] ?>">
 								<button type="submit" class="btn">
 									<i class="fa fa-heart text-danger"></i>
 								</button>
-								<strong id="likecount">5</strong>
+								<strong id="likecount"><?php echo $row2['totallikes']; ?></strong>
 							</form>
 							
 						</div>
@@ -118,7 +124,6 @@
 					data:{userid:13,blogid:17},
 					success:function(data,status,xhr){
 						$("#likecount").text(data);
-						console.log(data);
 					}
 				});
 			}
