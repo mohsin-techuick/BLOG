@@ -93,18 +93,60 @@
 								<i class="fa fa-thumbs-up text-dark"></i>	
 								<strong><?php echo $row['likes']; ?></strong>
 							</a>
-							<form action="" method="post" class="form-inline mt-2" autocomplete="off">
-								<input type="text" name="comment" placeholder="Comment" class="form-control mr-2">
-								<input type="submit" value="post" class="btn btn-primary">
+							<!--Comment post frontend start-->	
+							<!--Comments post form-->
+							<form method="post" class="form-inline mt-2" autocomplete="off"
+								  data="<?php echo $row['id'] ?>">
+								<input type="hidden" class="userid"
+									   value="<?php echo $_SESSION['USER-ID']; 
+											  ?>">
+								<input type="hidden" class="blogid" 
+									   value="<?php echo $row['id']; ?>">
+								<input type="text" name="comment" placeholder="Comment" class="form-control mr-2 comment">
+								<input type="button" value="post" class="btn btn-primary postCommentBtn" >
 							</form>	
-							<a href="" class="toggle_comment d-block text-center p-2 text-dark">comments</a>
-							<div class="comments">
-								<div id="profile" class="d-flex align-items-center justify-content-start mt-2">
-									<img src="db_images/1602578494nigerian_currency.jpg" width="40"  height="40" class="rounded-circle" alt="">
-									 <h6 class="px-2">ali</h6>
+							
+							<!--Comments post form end-->
+							
+							<?php
+							
+							// Display total no of comments for specific blog
+								
+							$tsql="SELECT blog_id,count(*) as 'totalComment' 
+							FROM comments 
+							WHERE blog_id={$row['id']} 
+							GROUP by blog_id";
+							$countResult=mysqli_query($conn,$tsql);
+							$data=mysqli_fetch_assoc($countResult);
+							
+							?>
+							<a href="" class="toggle_comment d-block text-center p-2 text-dark">
+								comments ( 
+									<?php echo  $data=$data['totalComment'] ? $data['totalComment']  : "0"; ?> 
+								)
+							</a>
+							
+						<div class="comments">
+							 <?php  
+								$q2="SELECT * FROM comments WHERE blog_id={$row['id']}";
+								$resu=mysqli_query($conn,$q2);
+								while($cmt=mysqli_fetch_assoc($resu)):
+							?>
+							 <div class="media">
+								<img src="db_images/1602578755nigerian_currency.jpg" width="40" height="40" 
+									 class="mr-3 rounded-circle" alt="user profile">
+								<div class="media-body">
+									<h5 class="mt-0"><?php echo $cmt['user_id'];  ?> 
+										<small>
+										<i><?php echo $cmt['posted_date']; ?> </i>
+										</small></h5>
+									<p id="comment"><?php echo $cmt['comment']; ?></p>
 								</div>
-								<p id="comment">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat exercitationem corrupti alias quo delectus ut, iusto illo voluptate iure, recusandae magnam aut nemo ratione officiis. Voluptatem pariatur ducimus ipsum, tempora?</p>
 							</div>
+							<hr>
+							<?php endwhile; ?>
+						</div>
+							<!--Comment post frontend end-->
 						</div>
 					</div>
 				</div>
@@ -119,19 +161,17 @@
 	<script src="assets/bootstrap/js/popper.min.js" type="text/javascript"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		
 		$(document).ready(function(){
 			$("#blogs").addClass("active");
-			$(".comments").hide();
+//			$(".comments").hide();
 			//ajax request for likes blogs
 			function likeAjax(uid,bid){
 				$.ajax({
 					url:"database/blogLikesDislike.php",
 					type:"POST",
 					data:{userid:uid,blogid:bid},
-					success:function(data,status,xhr){
-						$("#likecount").text(data);
-						console.log(data);
+					success:function(response){
+						
 					}
 				});
 			}
@@ -149,6 +189,28 @@
 				evt.preventDefault();
 				var a=$(this).next(".comments").toggle(500);
 			});
+			
+				$(".postCommentBtn").click(function(evt){
+					evt.preventDefault();
+					var userId=$(this).parent('form').find('.userid').val();
+					var blogId=$(this).parent('form').find('.blogid').val();
+					var comment=$(this).parent('form').find('.comment').val();
+					postComment(userId,blogId,comment);
+					
+				});
+			
+			function postComment(uid,bid,cmt){
+				$.ajax({
+					url:"database/comments.php",
+					type:"POST",
+					data:{userid:uid,blogid:bid,comment:cmt},
+					success:function(response){
+						console.log(response);
+					}
+				});
+			}
+			
+			
 		});
 	</script>
 </body>

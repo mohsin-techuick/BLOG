@@ -11,7 +11,7 @@ $res=mysqli_query($conn,$sql);
 
 //if likes successfully 
 if($res){
-	echo "like";	
+	echo "liked";	
 }
 //if user like already query will fail 
 else{
@@ -19,6 +19,6 @@ else{
 	$delQuery="DELETE FROM likes WHERE user_id=$userid and blog_id=$blogid";
 	$result=mysqli_query($conn,$delQuery);
 	if($result){
-		echo "dislike";
+		echo "disliked";
 	}
 }
