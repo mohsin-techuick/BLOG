@@ -97,8 +97,8 @@
 								<input type="text" name="comment" placeholder="Comment" class="form-control mr-2">
 								<input type="submit" value="post" class="btn btn-primary">
 							</form>	
-							<a href="" class="hide_comment d-block text-center p-2 text-dark">comments</a>
-							<div id="comments">
+							<a href="" class="toggle_comment d-block text-center p-2 text-dark">comments</a>
+							<div class="comments">
 								<div id="profile" class="d-flex align-items-center justify-content-start mt-2">
 									<img src="db_images/1602578494nigerian_currency.jpg" width="40"  height="40" class="rounded-circle" alt="">
 									 <h6 class="px-2">ali</h6>
@@ -122,6 +122,7 @@
 		
 		$(document).ready(function(){
 			$("#blogs").addClass("active");
+			$(".comments").hide();
 			//ajax request for likes blogs
 			function likeAjax(uid,bid){
 				$.ajax({
@@ -144,9 +145,9 @@
 			});
 			
 			//Comments functionality
-			$(".hide_comment").click(function(evt){
+			$(".toggle_comment").click(function(evt){
 				evt.preventDefault();
-				var a=$(this).next("#comments").toggle(500);
+				var a=$(this).next(".comments").toggle(500);
 			});
 		});
 	</script>
