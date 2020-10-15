@@ -31,18 +31,34 @@
 		<div id="blog-list">
 			<h1>BLOGS</h1>
 			<div class="row">
+				
+				<!--Fetch Data-->
+					<!--
+						1) -> blogs(id,user_id,titile,description,thumbnail,...)
+						2) ->likes(user_id,blog_id)
+					-->
+				
 				<!--Fecth all active Blogs => having 'status' "1" from blog table  -->
+				
+				<!--
+						id,user_id,title,description,thumbnail,total_likes  
+				-->
+				
+				<!--
+						select * from blogs b left join likes l  on b.id=l.blog_id
+						
+				-->
+				
+				
+				
 				<?php
 				
 					include("connection.php");
-					$sql="SELECT * FROM blogs where status=1";
+				
+					//Query for showing blogs with total likes of that blog using left join
+					$sql="SELECT blogs.*,likes.*, COUNT(likes.user_id) as likes FROM blogs LEFT JOIN likes ON blogs.id=likes.blog_id GROUP BY blogs.id;";
 					$res=mysqli_query($conn,$sql);
 					while($row=mysqli_fetch_assoc($res)):
-				
-					// Second Query for showing total likes	for blogs
-					$sql2="SELECT blog_id, count(*) as totallikes FROM `likes` GROUP BY blog_id HAVING blog_id={$row['id']}";
-					$res2=mysqli_query($conn,$sql2);
-					$row2=mysqli_fetch_assoc($res2);
 				?>
 				<div class="col-md-4 blog-post mb-2">
 					<div class="card">
@@ -96,7 +112,7 @@
 								<button type="submit" class="btn">
 									<i class="fa fa-heart text-danger"></i>
 								</button>
-								<strong id="likecount"><?php echo $row2['totallikes']; ?></strong>
+								<strong id="likecount"><?php echo $row['likes']; ?></strong>
 							</form>
 							
 						</div>
