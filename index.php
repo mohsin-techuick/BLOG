@@ -34,123 +34,8 @@
 	<div class="container">
 		<div id="blog-list">
 			<h1>BLOGS</h1>
-			<div class="row">
-				<?php
-					include("connection.php");
-					//Query for showing blogs with total likes of that blog using left join
-					$sql="SELECT blogs.*,likes.user_id as user_liked,likes.blog_id as like_blogid, COUNT(likes.blog_id) as likes FROM blogs LEFT JOIN likes ON blogs.id=likes.blog_id 
-					GROUP BY blogs.id order by blogs.id";
-				
-					$res=mysqli_query($conn,$sql);
-					while($row=mysqli_fetch_assoc($res)):
-				?>
-				<div class="col-md-4 blog-post mb-2">
-					<div class="card">
-						<img src="<?php echo '/PHPBlog/'.$row['thumbnail']; ?>"  alt="thumbnail" class="card-img-top">
-						<div class="card-body">
-							<p class="text-lowercase text-justify"><?php echo $row['title']; ?></p>
-							<hr />
-								<!--Display only 100 characters of description-->
-								<?php
-								$desc=$row['description'];
-									if(strlen($desc)>100){
-									$desc=substr($desc, 0, 100).'...'; 				
-								}
-								echo "<p>$desc</p>";
-								?>
-							<!--Read more only of it contains more than 100 characters-->
-								<!-- link trigger modal -->
-							<?php if(strlen($desc)>100): ?>				
-								<a href="javascript:void(0);" role="button" data-toggle="modal" data-target="#readmoreModel<?php echo $row['id']; ?>">
-								 Read more
-								</a>
-							<?php endif; ?>		
-							
-						<!-- Modal for read more functionality -->
-						<div class="modal fade" id="readmoreModel<?php echo $row['id']; ?>" tabindex="-1" role="dialog">
-						  <div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-							  <div class="modal-header">
-								<h5 class="modal-title text-dark text-uppercase" id="readmoreModel">
-									<?php echo $row['title']; ?>
-								 </h5>
-								<button type="button" class="close" data-dismiss="modal">
-								  <span>&times;</span>
-								</button>
-							  </div>
-							  <div class="modal-body" >
-								  <p class="text-dark"><?php echo $row['description']; ?></p>
-							  </div>
-							  <div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							  </div>
-							</div>
-						  </div>
-						</div>		
-						</div>
-						<div class="card-footer">
-							<!-- LIKE SECTION START-->
-								<a href="" class="like text-decoration-none text-dark" 
-								   data-blogid="<?php echo $row['id'] ?>">
-									<i class="fa fa-thumbs-up text-dark"></i>	
-									<strong><?php echo $row['likes']; ?></strong>
-								</a>
-							<!--COMMMENTS SECTION START-->
-							<form method="post" class="form-inline mt-2" autocomplete="off"
-								  data="<?php echo $row['id'] ?>">
-								<input type="hidden" class="userid"
-									   value="<?php echo $_SESSION['USER-ID']; 
-											  ?>">
-								<input type="hidden" class="blogid" 
-									   value="<?php echo $row['id']; ?>">
-								<input type="text" name="comment" placeholder="Comment" class="form-control mr-2 comment">
-								<input type="button" value="post" class="btn btn-primary postCommentBtn" >
-							</form>	
-							
-							<?php
-							
-							// Display total no of comments for specific blog
-							
-							$tsql="SELECT blog_id,count(*) as 'totalComment' 
-							FROM comments 
-							WHERE blog_id={$row['id']} 
-							GROUP by blog_id";
-							$countResult=mysqli_query($conn,$tsql);
-							$data=mysqli_fetch_assoc($countResult);
-							
-							?>
-							<a href="" class="toggle_comment d-block text-center p-2 text-dark">
-								comments ( 
-									<?php echo  $data=$data['totalComment'] ? $data['totalComment']  : "0"; ?> 
-								)
-							</a>
-							
-	
-						<div class="comments" style="max-height: 500px;overflow: auto">
-							 <?php  
-								$q2="SELECT * FROM comments WHERE blog_id={$row['id']} order by posted_date desc";
-								$resu=mysqli_query($conn,$q2);
-								while($cmt=mysqli_fetch_assoc($resu)):
-							?>
-							 <div class="media">
-								<img src="db_images/1602578755nigerian_currency.jpg" width="40" height="40" 
-									 class="mr-3 rounded-circle" alt="user profile">
-								<div class="media-body">
-									<h5 class="mt-0"><?php echo $cmt['user_id'];  ?> 
-										<small>
-										<i><?php echo $cmt['posted_date']; ?> </i>
-										</small></h5>
-									<p id="comment"><?php echo $cmt['comment']; ?></p>
-								</div>
-							</div>
-							<hr>
-							<?php endwhile; ?>
-						</div>
-							<!--COMMMENTS SECTION END-->
-						</div>
-					</div>
-				</div>
-				<?php endwhile; ?>
+			<div class="row" id="allblogs">
+				<!--HERE DATA WILL BE APPENDED USING AJAX FUNCTION -->
 			</div>
 		</div>
 	</div>
@@ -171,26 +56,25 @@
 					type:"POST",
 					data:{userid:uid,blogid:bid},
 					success:function(response){
-						
+						//if like success fetch all data using ajax
+						blogsCommentsAjax();	
 					}
 				});
 			}
 			
-			$(".like").on('click',function(e){
+			$("#allblogs").on('click','.like',function(e){
 				e.preventDefault();
 				var user_id="<?php echo $_SESSION['USER-ID']; ?>";
 				var blog_id=$(this).data('blogid');
 				likeAjax(user_id,blog_id);
-				
 			});
-			
 			//Comments functionality
-			$(".toggle_comment").click(function(evt){
+			$("#allblogs").on('click','.toggle_comment',function(evt){
 				evt.preventDefault();
 				var a=$(this).next(".comments").toggle(500);
 			});
 			
-				$(".postCommentBtn").click(function(evt){
+				$("#allblogs").on('click','.postCommentBtn',function(evt){
 					evt.preventDefault();
 					var userId=$(this).parent('form').find('.userid').val();
 					var blogId=$(this).parent('form').find('.blogid').val();
@@ -205,10 +89,8 @@
 					type:"POST",
 					data:{userid:uid,blogid:bid,comment:cmt},
 					success:function(response){
-						console.log(response);
-						
-						
-						
+						//if comment posted success then fecth all data using ajax
+						blogsCommentsAjax();
 					}
 				});
 			}
@@ -218,14 +100,94 @@
 					url:"users/bolgsAndCommentsJson.php",
 					type:"GET",
 					success:function(response){
+						let testing="MOHSIN MUSTAF";
 						let blogs=JSON.parse(response);
-						console.log(blogs);
+						 
+						let html="";
+						for(let key in blogs){
+							
+							let blog= blogs[key]; // complete blog with all commnet for that blog
+							
+							html+="<div class='col-md-4 blog-post mb-2'>";
+							html+="<div class='card'>";	
+							//here will be image of post
+							html+="<img src='/PHPBlog/"+blog.thumbnail+"' alt='thumbnail' class='card-img-top'>";
+							html+="<div class='card-body'>";
+								//here will be title of post
+							html+="<p class='text-lowercase text-justify'>"+blog.title+"</p>";
+							html+="<hr />";
+							//here will be post description
+							html+="<p>"+blog.description+"</p>";
+							html+="<div class='card-footer'>";
+							
+								/* LIKE SECTION START */										
+								//post od here insode data-blogid $row['id']
+							html+="<a href='' class='like text-decoration-none text-dark' data-blogid='"+blog.id+"'>"
+							+"<i class='fa fa-thumbs-up text-dark'></i>"
+								//totallikes here $row['likes']
+							+"<strong class='ml-2'>"+blog.likes+"</strong>"
+							+"</a>";
+
+								/* LIKE SECTION END */
+							
+								/*COMMMENTS SECTION START*/
+							
+									/*COMMENT FORM START*/
+							html+="<form method='post' data="+blog.id+" class='form-inline mt-2' autocomplete='off'>";
+							
+							html+="<input type='hidden' class='userid' value='<?php echo $_SESSION['USER-ID'];?>'>";							
+							html+="<input type='hidden' class='blogid' value='"+blog.id+"'>";
+							html+="<input type='text' name='comment' placeholder='Comment' class='form-control mr-2 comment'>";
+							
+							html+="<input type='button' value='post' class='btn btn-primary postCommentBtn' >";
+							html+="</form>";	
+									
+									/*COMMENT FORM END*/
+							
+							
+								/*COMMENT SHOW SECTION START*/
+							
+							html+="<a href='' class='toggle_comment d-block text-center p-2 text-dark'>"+
+								"comments ("+blog.comments.length+")"+
+							"</a>";
+							
+	
+							//here till be loop
+							for(let blogComments in blog.comments){
+								let comments=blog.comments[blogComments];
+								
+								html+="<div class='comments' style='max-height: 500px;overflow: auto'>";
+								html+="<div class='media'>";
+								html+="<img src='db_images/1602578755nigerian_currency.jpg' width='40' height='40' class='mr-3 rounded-circle' alt='user profile'>";
+								html+="<div class='media-body'>";
+									//herewill use user_id of comment //echo $cmt['user_id'];
+								html+="<p class='mt-0'>"+testing+"<small>"+
+									//here will be comment posted date  $cmt['posted_date'];
+									"<i>"+testing+"</i>"+
+									"</small></p>";
+								//here will be comoment $cmt['comment'];
+								html+="<p id='comment'>"+comments.comment+"</p>";
+								html+="</div>";
+								html+="</div>";
+								html+="<hr />";
+								html+="</div>";
+
+							}
+								
+						/*COMMENT SHOW SECTION END*/
+							
+							
+							html+="</div>"; //CARD FOOTER END
+							html+="</div>"; //CARD BODY END
+							html+="</div>";  //END CARD CLASS
+							html+="</div>";  //END COL CLASS
+							}
+						$("#allblogs").html(html);
 					}
 				});
 			}
+			
 			blogsCommentsAjax();
-			
-			
 		});
 	</script>
 </body>

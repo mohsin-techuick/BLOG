@@ -10,7 +10,7 @@ $allBlogs=[];
 $allComments=[];
 
 while($row=mysqli_fetch_assoc($res)){
-	$q2="SELECT * FROM comments WHERE blog_id={$row['id']} order by posted_date desc" ;
+	$q2="SELECT * FROM comments WHERE blog_id={$row['id']}" ;
 	$resu=mysqli_query($conn,$q2);
 	$comments=mysqli_fetch_all($resu,MYSQLI_ASSOC);
 	$row['comments']=$comments;
