@@ -26,7 +26,7 @@ if(!isset($_SESSION['ADMIN-NAME'])){
         <div class="row p-3">
 		<?php include("../connection.php") ?>
 		<?php
-			// all users fetxh
+			// all users fetch
 			$id=$_GET['uid'] ?? -1;
 			$sql="SELECT * FROM blogs WHERE user_id=$id";
 			$res=mysqli_query($conn,$sql);
@@ -34,6 +34,8 @@ if(!isset($_SESSION['ADMIN-NAME'])){
 			while($row=mysqli_fetch_assoc($res)):
 		?>
             <div class="col-md-4">
+				
+				<a href="usersList.php" class="btn btn-dark">&lt;-Back</a>
 				<div class="card">
 					<img src="<?php echo '../'.$row['thumbnail'];  ?>" class="card-img-top" style="max-height: 150px" alt="">
 					<div class="card-header bg-dark text-white text-capitalize"><h6><?php echo $row['title'] ?></h6></div>
