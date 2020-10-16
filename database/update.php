@@ -1,4 +1,6 @@
-<?php  
+<?php
+
+	/* Update blog post */
 include("../connection.php");	
 if(isset($_POST['update']))
 {
@@ -13,7 +15,6 @@ if(isset($_POST['update']))
 		$path.="db_images/".time().$thumbnail['name'];
 		move_uploaded_file($thumbnail['tmp_name'],"../".$path);
 	}
-	/* Update blog post */
 	$sql="UPDATE blogs set title='$title', description='$description', 
 	thumbnail='$path', updated_at='$today' WHERE id=$id";
 	

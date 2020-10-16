@@ -1,4 +1,5 @@
 <?php  
+/*Update user profile*/
 include("../connection.php");	
 if(isset($_POST['profileupdate']))
 {
@@ -8,7 +9,8 @@ if(isset($_POST['profileupdate']))
 	$lastname=htmlentities($_POST['lastname']);
 	$email=htmlentities($_POST['email']);
 	$phone=htmlentities($_POST['phone']);
-	$password=md5($_POST['password']);
+	$password=$_POST['password'];
+	$encrypt_pass=md5($_POST['password']);
 	$profile_pic=$_FILES['profile_pic'];
 	$file_path=$_POST['oldfile'];
 	
@@ -18,14 +20,33 @@ if(isset($_POST['profileupdate']))
 		move_uploaded_file($profile_pic['tmp_name'],"../".$file_path);
 	}
 	
+	$sql="";
+	//if user not type in password fiels not to update password  
+	if(empty($password)){
+		$sql="UPDATE users SET firstname='$firstname',lastname='$lastname',email='$email',phone='$phone',profile_pic='$file_path' WHERE id=$id"; 
+	}
+	//if user type in password fiels update the password 
+	else{
+		$sql="UPDATE users SET firstname='$firstname',lastname='$lastname',email='$email',
+		phone='$phone',profile_pic='$file_path',password='$encrypt_pass' WHERE id=$id"; 
+	}
 	/* Insert Data into  users table */
-	$sql="UPDATE users SET firstname='$firstname',lastname='$lastname',email='$email',phone='$phone',profile_pic='$file_path',
-	password='$password' WHERE id=$id"; 
-
 	$res=mysqli_query($conn,$sql);
 	if($res){
-		echo "<script>alert('updated successfully')</script>";
-		echo "<script>window.location.href='../users/profile.php'</script>";
-		exit();
+			//if user changed the password then redirect it to login page for login again 
+		if(!empty($password)){
+//			//Destroy session data
+			session_start();
+			session_destroy();
+			echo "<script>window.location.href='../users/login.php'</script>";
+			exit();
+		}
+//			// if  user doesnot changed the password
+		else{
+			echo "<script>window.location.href='../users/profile.php'</script>";
+			exit();
+		}
 	}
+	
+	
 }

@@ -38,7 +38,9 @@
 				<?php
 					include("connection.php");
 					//Query for showing blogs with total likes of that blog using left join
-					$sql="SELECT blogs.*,likes.*, COUNT(likes.blog_id) as likes FROM blogs LEFT JOIN likes ON blogs.id=likes.blog_id GROUP BY blogs.id order by blogs.id";
+					$sql="SELECT blogs.*,likes.user_id as user_liked,likes.blog_id as like_blogid, COUNT(likes.blog_id) as likes FROM blogs LEFT JOIN likes ON blogs.id=likes.blog_id 
+					GROUP BY blogs.id order by blogs.id";
+				
 					$res=mysqli_query($conn,$sql);
 					while($row=mysqli_fetch_assoc($res)):
 				?>
@@ -59,12 +61,12 @@
 							<!--Read more only of it contains more than 100 characters-->
 								<!-- link trigger modal -->
 							<?php if(strlen($desc)>100): ?>				
-							
 								<a href="javascript:void(0);" role="button" data-toggle="modal" data-target="#readmoreModel<?php echo $row['id']; ?>">
 								 Read more
 								</a>
 							<?php endif; ?>		
-						<!-- Modal -->
+							
+						<!-- Modal for read more functionality -->
 						<div class="modal fade" id="readmoreModel<?php echo $row['id']; ?>" tabindex="-1" role="dialog">
 						  <div class="modal-dialog modal-dialog-centered" role="document">
 							<div class="modal-content">
@@ -87,14 +89,13 @@
 						</div>		
 						</div>
 						<div class="card-footer">
-							<!-- Like functionality of post using ajax-->
-							<a href="" class="like text-decoration-none text-dark" 
-							   data-blogid="<?php echo $row['id'] ?>">
-								<i class="fa fa-thumbs-up text-dark"></i>	
-								<strong><?php echo $row['likes']; ?></strong>
-							</a>
-							<!--Comment post frontend start-->	
-							<!--Comments post form-->
+							<!-- LIKE SECTION START-->
+								<a href="" class="like text-decoration-none text-dark" 
+								   data-blogid="<?php echo $row['id'] ?>">
+									<i class="fa fa-thumbs-up text-dark"></i>	
+									<strong><?php echo $row['likes']; ?></strong>
+								</a>
+							<!--COMMMENTS SECTION START-->
 							<form method="post" class="form-inline mt-2" autocomplete="off"
 								  data="<?php echo $row['id'] ?>">
 								<input type="hidden" class="userid"
@@ -106,12 +107,10 @@
 								<input type="button" value="post" class="btn btn-primary postCommentBtn" >
 							</form>	
 							
-							<!--Comments post form end-->
-							
 							<?php
 							
 							// Display total no of comments for specific blog
-								
+							
 							$tsql="SELECT blog_id,count(*) as 'totalComment' 
 							FROM comments 
 							WHERE blog_id={$row['id']} 
@@ -126,9 +125,10 @@
 								)
 							</a>
 							
-						<div class="comments">
+	
+						<div class="comments" style="max-height: 500px;overflow: auto">
 							 <?php  
-								$q2="SELECT * FROM comments WHERE blog_id={$row['id']}";
+								$q2="SELECT * FROM comments WHERE blog_id={$row['id']} order by posted_date desc";
 								$resu=mysqli_query($conn,$q2);
 								while($cmt=mysqli_fetch_assoc($resu)):
 							?>
@@ -146,7 +146,7 @@
 							<hr>
 							<?php endwhile; ?>
 						</div>
-							<!--Comment post frontend end-->
+							<!--COMMMENTS SECTION END-->
 						</div>
 					</div>
 				</div>
@@ -163,7 +163,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#blogs").addClass("active");
-//			$(".comments").hide();
+			$(".comments").hide();
 			//ajax request for likes blogs
 			function likeAjax(uid,bid){
 				$.ajax({
@@ -206,9 +206,24 @@
 					data:{userid:uid,blogid:bid,comment:cmt},
 					success:function(response){
 						console.log(response);
+						
+						
+						
 					}
 				});
 			}
+			
+			function blogsCommentsAjax(){
+				$.ajax({
+					url:"users/bolgsAndCommentsJson.php",
+					type:"GET",
+					success:function(response){
+						let blogs=JSON.parse(response);
+						console.log(blogs);
+					}
+				});
+			}
+			blogsCommentsAjax();
 			
 			
 		});
