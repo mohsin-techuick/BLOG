@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 13, 2020 at 04:57 AM
+-- Generation Time: Oct 16, 2020 at 10:34 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -31,24 +31,23 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `blogs`;
 CREATE TABLE IF NOT EXISTS `blogs` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) UNSIGNED NOT NULL,
   `title` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `thumbnail` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL,
-  `slug` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `blogs`
 --
 
-INSERT INTO `blogs` (`id`, `title`, `description`, `thumbnail`, `created_at`, `updated_at`, `slug`, `status`) VALUES
-(1, 'Database', 'lorem ipasa', NULL, '2020-10-13 09:48:35', NULL, 'slug-goes-here', 0),
-(2, 'Operation', 'sudsdsyd hyff fefvtf', NULL, '2020-10-13 09:55:32', NULL, 'here-slug-second', 0);
+INSERT INTO `blogs` (`id`, `user_id`, `title`, `description`, `thumbnail`, `created_at`, `updated_at`, `status`) VALUES
+(24, 14, 'Hello wprld!', 'hdfvfff  f', NULL, '2020-10-16 15:30:27', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -59,13 +58,14 @@ INSERT INTO `blogs` (`id`, `title`, `description`, `thumbnail`, `created_at`, `u
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `comment` varchar(255) NOT NULL,
+  `comment` text NOT NULL,
   `blog_id` int(11) UNSIGNED DEFAULT NULL,
   `user_id` int(11) UNSIGNED DEFAULT NULL,
+  `posted_date` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
-  KEY `blog_id` (`blog_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `comments_ibfk_1` (`blog_id`),
+  KEY `comments_ibfk_2` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -80,14 +80,6 @@ CREATE TABLE IF NOT EXISTS `likes` (
   PRIMARY KEY (`user_id`,`blog_id`),
   KEY `blog_id` (`blog_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `likes`
---
-
-INSERT INTO `likes` (`user_id`, `blog_id`) VALUES
-(1, 1),
-(1, 2);
 
 -- --------------------------------------------------------
 
@@ -131,25 +123,32 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `phone`, `profile_pic`, `password`, `created_at`, `updated_at`, `role_id`) VALUES
-(1, 'mohsin', 'mustafa', 'mohsin.techuick@gmail.com', '0310266871', NULL, '5f4dcc3b5aa765d61d8327deb882cf99', '2020-10-13 09:30:29', NULL, 2);
+(13, 'mohsin', 'mustafa', 'mohsinmustafa576@gmail.com', '03106266871', 'db_images/1602663219cup.png', '5f4dcc3b5aa765d61d8327deb882cf99', '2020-10-14 13:13:39', NULL, 2),
+(14, 'ali', 'akbar', 'aliahmad@gmail.com', '03457119986', 'db_images/1602761201eagle.png', '5f4dcc3b5aa765d61d8327deb882cf99', '2020-10-14 13:13:39', NULL, 1);
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `blogs`
+--
+ALTER TABLE `blogs`
+  ADD CONSTRAINT `blog_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`id`),
-  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `likes`
