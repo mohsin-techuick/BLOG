@@ -18,9 +18,11 @@
 	<link rel="stylesheet" href="assets/fontawesome/css/all.css">
 	<!--Style for current active link-->
 	<style type="text/css">
+		
 	   .active{
-		   background-color: green;
+		   background-color: black;
 		   color: white;
+		   text-align: center;
 	   }
 		.like:hover > i{
 	
@@ -31,13 +33,16 @@
 <body>
 	<!-- including header -->
 	<?php include_once("partials/header.php"); ?>
-	<div class="container">
-		<div id="blog-list">
-			<h1>BLOGS</h1>
-			<div class="row" id="allblogs">
+	<div class="container-fluid p-3">
+			<h1 class="jumbotron bg-dark text-white text-center rounded-0">
+				BLOGS
+			</h1>
+			<div class="row justify-content-center" >
+				<div class="col-md-10">
+					<div class="row" id="allblogs"></div>
+				</div>
 				<!--HERE DATA WILL BE APPENDED USING AJAX FUNCTION -->
 			</div>
-		</div>
 	</div>
 			<!-- Including footer -->
 	<?php  include_once("partials/footer.php"); ?>
@@ -48,7 +53,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#blogs").addClass("active");
-			$(".comments").hide();
+//			$(".comments").hide();
 			//ajax request for likes blogs
 			function likeAjax(uid,bid){
 				$.ajax({
@@ -100,25 +105,27 @@
 					url:"users/bolgsAndCommentsJson.php",
 					type:"GET",
 					success:function(response){
-						let testing="MOHSIN MUSTAF";
+						let testing="testing";
 						let blogs=JSON.parse(response);
-						 
+						console.log(blogs);
 						let html="";
+						
+						
 						for(let key in blogs){
 							
 							let blog= blogs[key]; // complete blog with all commnet for that blog
 							
 							html+="<div class='col-md-4 blog-post mb-2'>";
-							html+="<div class='card'>";	
+							html+="<div class='card border-0'>";	
 							//here will be image of post
 							html+="<img src='/PHPBlog/"+blog.thumbnail+"' alt='thumbnail' class='card-img-top'>";
-							html+="<div class='card-body'>";
+							html+="<div class='card-body p-0'>";
 								//here will be title of post
-							html+="<p class='text-lowercase text-justify'>"+blog.title+"</p>";
+							html+="<p class='text-lowercase text-justify p-3'>"+blog.title+"</p>";
 							html+="<hr />";
 							//here will be post description
-							html+="<p>"+blog.description+"</p>";
-							html+="<div class='card-footer'>";
+							html+="<p class='p-3'>"+blog.description+"</p>";
+							html+="<div class='card-footer bg-white'>";
 							
 								/* LIKE SECTION START */										
 								//post od here insode data-blogid $row['id']
@@ -138,8 +145,7 @@
 							html+="<input type='hidden' class='userid' value='<?php echo $_SESSION['USER-ID'];?>'>";							
 							html+="<input type='hidden' class='blogid' value='"+blog.id+"'>";
 							html+="<input type='text' name='comment' placeholder='Comment' class='form-control mr-2 comment'>";
-							
-							html+="<input type='button' value='post' class='btn btn-primary postCommentBtn' >";
+							html+="<input type='button' value='post' class='btn btn-primary mt-2 postCommentBtn'>";
 							html+="</form>";	
 									
 									/*COMMENT FORM END*/
@@ -152,27 +158,29 @@
 							"</a>";
 							
 	
+						//Comment section parent
+						html+="<div class='comments' style='max-height: 500px;overflow: auto;display:none'>";
 							//here till be loop
 							for(let blogComments in blog.comments){
-								let comments=blog.comments[blogComments];
-								
-								html+="<div class='comments' style='max-height: 500px;overflow: auto'>";
+								let cmt=blog.comments[blogComments];
+																
 								html+="<div class='media'>";
 								html+="<img src='db_images/1602578755nigerian_currency.jpg' width='40' height='40' class='mr-3 rounded-circle' alt='user profile'>";
 								html+="<div class='media-body'>";
-									//herewill use user_id of comment //echo $cmt['user_id'];
-								html+="<p class='mt-0'>"+testing+"<small>"+
+									//here will use user_id of comment //echo $cmt['user_id'];
+								html+="<p class='mt-0'><small>"+
 									//here will be comment posted date  $cmt['posted_date'];
-									"<i>"+testing+"</i>"+
+									"<i class='ml-2'>"+cmt.posted_date+"</i>"+
 									"</small></p>";
 								//here will be comoment $cmt['comment'];
-								html+="<p id='comment'>"+comments.comment+"</p>";
+								html+="<p id='comment'>"+cmt.comment+"</p>";
 								html+="</div>";
 								html+="</div>";
 								html+="<hr />";
-								html+="</div>";
 
 							}
+							
+						html+="</div>"; //comment section parent end
 								
 						/*COMMENT SHOW SECTION END*/
 							

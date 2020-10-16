@@ -18,7 +18,7 @@
 		   	</li>		 	
 			<?php endif; ?>
 		   <li class="ml-auto"></li>
-            <li class="nav-item dropdown">
+            <li class="nav-item  dropdown">
                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" >
 					<!--Display username only if user logged in-->
 					<?php

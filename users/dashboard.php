@@ -15,9 +15,11 @@
 	<link rel="stylesheet" href="../assets/css/index.css">
 	<style>
 		.active{
-		   background-color: green;
+		   background-color: black;
 		   color: white;
+		   text-align: center;
 	   }
+		
 	</style>
 </head>
 <body>
