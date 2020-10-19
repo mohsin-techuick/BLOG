@@ -35,7 +35,8 @@ if(!isset($_SESSION['ADMIN-NAME'])){
 				$query="SELECT count(*) as total FROM blogs WHERE status=$blogStatus";
 			}
 			else if($table=="users"){
-				$query="SELECT count(*) as total FROM users";
+				//show count only for users
+				$query="SELECT count(*) as total FROM users WHERE role_id=1";
 			}
 			$res=mysqli_query($conn,$query);
 			$row=mysqli_fetch_assoc($res);

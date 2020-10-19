@@ -105,9 +105,10 @@
 					url:"users/bolgsAndCommentsJson.php",
 					type:"GET",
 					success:function(response){
+						console.log(JSON.parse(response));
 						let testing="testing";
 						let blogs=JSON.parse(response);
-						console.log(blogs);
+				
 						let html="";
 						
 						
@@ -163,20 +164,20 @@
 							//here till be loop
 							for(let blogComments in blog.comments){
 								let cmt=blog.comments[blogComments];
-																
+												
 								html+="<div class='media'>";
-								html+="<img src='db_images/1602578755nigerian_currency.jpg' width='40' height='40' class='mr-3 rounded-circle' alt='user profile'>";
+								html+="<div>";
+								html+="<img src='/PHPBlog/"+cmt.user.profile_pic+"' width='50px' height='40' class='mr-3 rounded-circle' alt='user profile'>";
+								html+="<p style='width:50px;text-align:center'><small>"+cmt.user.firstname+"</small><p>";
+								html+="</div>";
 								html+="<div class='media-body'>";
 									//here will use user_id of comment //echo $cmt['user_id'];
-								html+="<p class='mt-0'><small>"+
-									//here will be comment posted date  $cmt['posted_date'];
-									"<i class='ml-2'>"+cmt.posted_date+"</i>"+
-									"</small></p>";
+							
+								html+="<h6><i>"+cmt.posted_date+"</i></h6>";
 								//here will be comoment $cmt['comment'];
-								html+="<p id='comment'>"+cmt.comment+"</p>";
+								html+="<p>"+cmt.comment+"</p>";
 								html+="</div>";
 								html+="</div>";
-								html+="<hr />";
 
 							}
 							
@@ -198,5 +199,7 @@
 			blogsCommentsAjax();
 		});
 	</script>
+	
+	
 </body>
 </html>
